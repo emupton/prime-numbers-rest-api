@@ -16,10 +16,17 @@ class Routes {
 
   lazy val routes: Route = {
     pathPrefix("prime") {
-      path(Remaining) {
-        n: String =>
-          get {
-            complete(OK, PrimeList(AlgorithmB.obtainPrimesUpToN(n.toInt)))
+      pathPrefix(Segment) {
+        algorithm: String =>
+          path(Remaining) {
+            n: String =>
+              get {
+                algorithm match {
+                  case "algoA" => complete(OK, PrimeList(AlgorithmA.obtainPrimesUpToN(n.toInt)))
+                  case "algoB" => complete(OK, PrimeList(AlgorithmB.obtainPrimesUpToN(n.toInt)))
+                  case _ => complete(BadRequest)
+                }
+              }
           }
       }
     } ~ path("healthcheck") {
