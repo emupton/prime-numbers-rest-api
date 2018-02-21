@@ -6,6 +6,8 @@ import akka.http.scaladsl.server.directives.PathDirectives._
 import akka.http.scaladsl.server.directives.MethodDirectives._
 import akka.http.scaladsl.server.directives.RouteDirectives._
 import akka.http.scaladsl.model.StatusCodes._
+import model.PrimeList
+import util.ImplicitJsonConversions._
 
 /**
   * Created by emma on 19/02/2018.
@@ -17,7 +19,7 @@ class Routes {
       path(Remaining) {
         n: String =>
           get {
-            complete(OK, PrimesGenerator.obtainPrimesUpToN(n.toInt).toString())
+            complete(OK, PrimeList(AlgorithmB.obtainPrimesUpToN(n.toInt)))
           }
       }
     } ~ path("healthcheck") {
