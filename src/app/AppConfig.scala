@@ -12,5 +12,7 @@ class AppConfig {
   lazy val httpHost: String = config.getString("http.host")
   lazy val httpPort: Int = config.getInt("http.port")
 
+  lazy val requestLimit: Int = config.getInt("security.requestLimit")
+
   lazy val appName: String = config.getString("app.name") //TODO: don't leave this in if it's redundant...
 }

@@ -20,6 +20,7 @@ trait PrimeGenerator {
     prospectivePrime >= 2 && isPrime
   }
 
+  //Will obtain the prime numbers up to and including N
   def obtainPrimesUpToN(n: Int): Seq[Int]
 
 }
