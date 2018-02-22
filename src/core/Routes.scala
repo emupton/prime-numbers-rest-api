@@ -1,4 +1,4 @@
-package app
+package core
 
 import akka.http.scaladsl.server.{Route, StandardRoute}
 import akka.http.scaladsl.server.RouteConcatenation._enhanceRouteWithConcatenation
@@ -7,7 +7,8 @@ import akka.http.scaladsl.server.directives.MethodDirectives._
 import akka.http.scaladsl.server.directives.RouteDirectives._
 import akka.http.scaladsl.model.StatusCodes.{BadRequest, OK}
 import com.google.inject.Inject
-import model.PrimeList
+import model.{PrimeList, Error}
+import prime.{AlgorithmA, AlgorithmB}
 import util.Constants._
 import util.ImplicitJsonConversions._
 
@@ -42,15 +43,15 @@ class Routes @Inject()(appConfig: AppConfig){
         algorithm match {
           case ALGORITHM_A => complete(OK, PrimeList(AlgorithmA.obtainPrimesUpToN(n.toInt)))
           case ALGORITHM_B => complete(OK, PrimeList(AlgorithmB.obtainPrimesUpToN(n.toInt)))
-          case _ => complete(BadRequest, "Invalid request - supply a valid algorithm")
+          case _ => complete(BadRequest, Error("Invalid request - supply a valid algorithm"))
         }
       }
       else {
-        complete(BadRequest, s"Invalid request - max value of ${appConfig.requestLimit} for n")
+        complete(BadRequest, Error(s"Invalid request - max value of ${appConfig.requestLimit} for n"))
       }
     ) match {
       case Success(route) => route
-      case Failure(exception: NumberFormatException) => complete(BadRequest, "Invalid request - supply a valid number")
+      case Failure(_: NumberFormatException) => complete(BadRequest, Error("Invalid request - supply a valid number"))
     }
   }
 }

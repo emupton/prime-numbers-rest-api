@@ -1,4 +1,4 @@
-package app
+package prime
 
 /**
   * Created by emma on 21/02/2018.

@@ -1,4 +1,4 @@
-package app
+package core
 
 import com.typesafe.config.{Config, ConfigFactory}
 
@@ -14,5 +14,4 @@ class AppConfig {
 
   lazy val requestLimit: Int = config.getInt("security.requestLimit")
 
-  lazy val appName: String = config.getString("app.name") //TODO: don't leave this in if it's redundant...
 }

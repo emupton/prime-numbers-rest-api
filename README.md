@@ -6,6 +6,10 @@ The prime numbers list can be retrieved through two different algorithms.
 This application is currently configured to run on port 8002. To run this application you need SBT installed, and then when within the directory of the repository enter the following command:
 ```sbt run```
 
+## To test
+To test this application an installation of sbt is also required. From the shell you then will run the following command:
+```sbt test```
+
 ## API
 
 ### GET /prime/:algorithm/:limit

@@ -1,4 +1,5 @@
-package app
+package prime
+
 import scala.collection.immutable.Range.Inclusive
 
 /**

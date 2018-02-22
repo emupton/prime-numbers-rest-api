@@ -1,4 +1,4 @@
-package app
+package core
 
 import akka.NotUsed
 import akka.actor.ActorSystem
@@ -17,7 +17,7 @@ trait MainApp {
   implicit val system: ActorSystem = ActorSystem("actor-system")
   implicit val materializer: ActorMaterializer = ActorMaterializer()
 
-  lazy val injector: Injector = Guice.createInjector(GuiceModule)
+  lazy val injector: Injector = Guice.createInjector(new Module())
   lazy val appConfig: AppConfig = injector.getInstance(classOf[AppConfig])
   lazy val routes: Flow[HttpRequest, HttpResponse, NotUsed] = route2HandlerFlow(injector.getInstance(classOf[Routes]).routes)
 
@@ -28,7 +28,7 @@ trait MainApp {
 
 object Main extends MainApp
 
-object GuiceModule extends AbstractModule {
+class Module extends AbstractModule {
   def configure: Unit = {
     //no custom bindings required for now
   }
