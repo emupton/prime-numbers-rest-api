@@ -34,4 +34,4 @@ Example response:
                "13"]
 ```
 Error codes:
-+ 400 BadRequest this can be triggered by either supplying an invalid algorithm string or supplying a very large limit
++ 400 BadRequest this can be triggered by either supplying an invalid algorithm string or supplying a very large limit.
