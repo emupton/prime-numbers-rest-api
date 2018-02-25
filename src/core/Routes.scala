@@ -24,9 +24,9 @@ class Routes @Inject()(appConfig: AppConfig){
       pathPrefix(Segment) {
         algorithm: String =>
           path(Remaining) {
-            n: String =>
+            limit: String =>
               get {
-                processRequest(algorithm, n)
+                processRequest(algorithm, limit)
                 }
               }
           }
@@ -37,12 +37,12 @@ class Routes @Inject()(appConfig: AppConfig){
       }
     }
 
-  def processRequest(algorithm: String, n: String): StandardRoute = {
+  def processRequest(algorithm: String, limit: String): StandardRoute = {
     Try(
-      if(n.toInt <= appConfig.requestLimit) {
+      if(limit.toInt <= appConfig.requestLimit) {
         algorithm match {
-          case ALGORITHM_A => complete(OK, PrimeList(AlgorithmA.obtainPrimesUpToN(n.toInt)))
-          case ALGORITHM_B => complete(OK, PrimeList(AlgorithmB.obtainPrimesUpToN(n.toInt)))
+          case ALGORITHM_A => complete(OK, PrimeList(AlgorithmA.obtainPrimesUpToN(limit.toInt)))
+          case ALGORITHM_B => complete(OK, PrimeList(AlgorithmB.obtainPrimesUpToN(limit.toInt)))
           case _ => complete(BadRequest, Error("Invalid request - supply a valid algorithm"))
         }
       }

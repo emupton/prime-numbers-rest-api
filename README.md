@@ -10,6 +10,12 @@ This application is currently configured to run on port 8002. To run this applic
 To test this application an installation of sbt is also required. From the shell you then will run the following command:
 ```sbt test```
 
+## To access
+This application's end-points can be accessed through the following address:
+```https://whispering-wave-47474.herokuapp.com```
+
+*(i.e ```https://whispering-wave-47474.herokuapp.com/prime/algoA/50```)*
+
 ## API
 
 ### GET /prime/:algorithm/:limit

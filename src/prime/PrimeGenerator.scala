@@ -15,7 +15,7 @@ trait PrimeGenerator {
 * */
   def isPrime(prospectivePrime :Int): Boolean = {
     val candidatePrimeDivisors: Inclusive = 2 to math.sqrt(prospectivePrime).toInt
-    val isPrime: Boolean = candidatePrimeDivisors.forall(counter => prospectivePrime % counter != 0)
+    val isPrime: Boolean = candidatePrimeDivisors.forall(candidateDivisor => prospectivePrime % candidateDivisor != 0)
 
     prospectivePrime >= 2 && isPrime
   }
