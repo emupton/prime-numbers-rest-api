@@ -33,11 +33,11 @@ Responds with a JSON document containing a list of the prime numbers computed.
 
 Example response:
 ```json
-    "primes": ["2",
+    {"primes": ["2",
                "3",
                "5",
                "7",
-               "13"]
+               "13"]}
 ```
 Error codes:
 + 400 BadRequest this can be triggered by either supplying an invalid algorithm string or supplying a very large limit.
