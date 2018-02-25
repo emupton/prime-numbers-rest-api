@@ -14,7 +14,7 @@ trait PrimeGenerator {
 *     over the current element in the collection, ensuring it isn't 0 (and by extension that the prospective prime isn't divisible)
 * */
   def isPrime(prospectivePrime :Int): Boolean = {
-    val candidatePrimeDivisors: Inclusive = (2 to math.sqrt(prospectivePrime).toInt)
+    val candidatePrimeDivisors: Inclusive = 2 to math.sqrt(prospectivePrime).toInt
     val isPrime: Boolean = candidatePrimeDivisors.forall(counter => prospectivePrime % counter != 0)
 
     prospectivePrime >= 2 && isPrime

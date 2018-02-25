@@ -1,8 +1,11 @@
+
 name := "prime-number-rest-akka"
 
 version := "1.0"
 
 scalaVersion := "2.12.4"
+
+herokuAppName in Compile := "whispering-wave-47474.git"
 
 scalaSource in Compile := baseDirectory.value / "src"
 resourceDirectory in Compile := baseDirectory.value / "conf"
@@ -19,5 +22,7 @@ libraryDependencies ++= {
     "org.scalatest" %% "scalatest" % "3.0.5" % "test, it",
     "com.google.inject" % "guice" % "4.1.0")
 }
+
+enablePlugins(JavaAppPackaging)
 
 lazy val root = (project in file(".")).configs(IntegrationTest).settings(Defaults.itSettings: _*)
