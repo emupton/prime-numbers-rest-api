@@ -13,7 +13,7 @@ object AlgorithmA extends PrimeGenerator {
       Nil
     }
     else {
-      val numbersToN: Inclusive = (2 to n)
+      val numbersToN: Inclusive = 2 to n
       numbersToN.filter(x => isPrime(x))
     }
   }
