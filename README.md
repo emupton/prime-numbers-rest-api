@@ -40,4 +40,19 @@ Example response:
                "13"]}
 ```
 Error codes:
-+ 400 BadRequest this can be triggered by either supplying an invalid algorithm string or supplying a very large limit.
++ 400 BadRequest this can be triggered by either supplying an invalid algorithm string or supplying a very large or non-numerical limit.
+
+### GET /prime/:limit
+
+This end-point simply takes in a limit as the string parameter. It defaults the algorithm through which the primes will be retrieved to ```algoA```.
+
+Example response:
+```json
+    {"primes": ["2",
+               "3",
+               "5",
+               "7",
+               "13"]}
+```
+Error codes:
++ 400 BadRequest this can be triggered by either supplying supplying a very large limit or a non-numerical limit.
