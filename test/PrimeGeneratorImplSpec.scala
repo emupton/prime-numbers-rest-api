@@ -15,7 +15,7 @@ class PrimeGeneratorImplSpec extends WordSpec with Matchers with ScalatestRouteT
   def scenarios(algorithm: PrimeGenerator): Unit = {
     "have an obtainPrimesUpToN function" which {
       "returns the existing primes up to a supplied limit" in {
-        algorithm.obtainPrimesUpToN(30) shouldBe Seq(2,3,5,7,11,13,17,19,23,29)
+        algorithm.obtainPrimesUpToN(30) shouldBe primesUpTo30
       }
 
       "handles <2 cases effectively" in {
