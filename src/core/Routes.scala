@@ -17,25 +17,20 @@ import scala.util.{Failure, Success, Try}
 /**
   * Created by emma on 19/02/2018.
   */
-class Routes @Inject()(appConfig: AppConfig){
+class Routes @Inject()(appConfig: AppConfig) {
 
   lazy val routes: Route = {
-    pathPrefix("prime") {
-      pathPrefix(Segment) {
-        algorithm: String =>
-          path(Remaining) {
-            limit: String =>
-              get {
-                processRequest(algorithm, limit)
-                }
-              }
-          }
-      }
-    } ~ path("healthcheck") {
+    path("prime" / Segment / Segment) { (algorithm, limit) =>
       get {
-        complete(OK)
+        processRequest(algorithm, limit)
       }
-    }
+    } ~
+      path("prime" / Segment) { (limit) =>
+        get {
+          processRequest(ALGORITHM_A, limit)
+        }
+      }
+  }
 
   def processRequest(algorithm: String, limit: String): StandardRoute = {
     Try(
