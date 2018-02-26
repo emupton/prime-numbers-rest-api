@@ -29,7 +29,12 @@ class Routes @Inject()(appConfig: AppConfig) {
         get {
           processRequest(ALGORITHM_A, limit)
         }
+      } ~
+    path("healthcheck") {
+      get{
+        complete(OK)
       }
+    }
   }
 
   def processRequest(algorithm: String, limit: String): StandardRoute = {

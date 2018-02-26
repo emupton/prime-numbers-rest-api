@@ -12,13 +12,14 @@ class RouteSpec extends WordSpec with Matchers with ScalatestRouteTest {
     override lazy val requestLimit = 100000
   }
   val serviceRoutes = new Routes(appConfig)
+  val primesUpTo30 = "[2,3,5,7,11,13,17,19,23,29]"
 
 
   s"/prime/${Constants.ALGORITHM_A}/:limit" should {
     "return a valid list of primes when receiving valid input" in {
       HttpRequest(HttpMethods.GET, uri = s"/prime/${Constants.ALGORITHM_A}/30") ~> serviceRoutes.routes ~> check {
         response.status shouldBe StatusCodes.OK
-        response.entity.toString() should include("[2,3,5,7,11,13,17,19,23,29]")
+        response.entity.toString() should include(primesUpTo30)
       }
     }
 
@@ -30,7 +31,7 @@ class RouteSpec extends WordSpec with Matchers with ScalatestRouteTest {
     }
 
     "return BadRequest when receiving a limit that exceeds the configured threshold" in {
-      HttpRequest(HttpMethods.GET, uri = s"/prime/${Constants.ALGORITHM_A}/1000000") ~> serviceRoutes.routes ~> check {
+      HttpRequest(HttpMethods.GET, uri = s"/prime/${Constants.ALGORITHM_A}/${appConfig.requestLimit + 1}") ~> serviceRoutes.routes ~> check {
         response.status shouldBe StatusCodes.BadRequest
         response.entity.toString() should include(s"Invalid request - max value of ${appConfig.requestLimit} for n")
       }
@@ -41,26 +42,34 @@ class RouteSpec extends WordSpec with Matchers with ScalatestRouteTest {
     "return a valid list of primes when receiving valid input" in {
       HttpRequest(HttpMethods.GET, uri = s"/prime/${Constants.ALGORITHM_B}/30") ~> serviceRoutes.routes ~> check {
         response.status shouldBe StatusCodes.OK
-        response.entity.toString() should include("[2,3,5,7,11,13,17,19,23,29]")
+        response.entity.toString() should include(primesUpTo30)
       }
     }
   }
 
-  s"prime/:limit" should {
+  "prime/:limit" should {
     "return a valid list of primes when receiving valid input" in {
       HttpRequest(HttpMethods.GET, uri = s"/prime/30") ~> serviceRoutes.routes ~> check {
         response.status shouldBe StatusCodes.OK
-        response.entity.toString() should include("[2,3,5,7,11,13,17,19,23,29]")
+        response.entity.toString() should include(primesUpTo30)
       }
     }
   }
 
 
-  s"/prime/invalidAlgo/:limit" should {
+  "/prime/invalidAlgo/:limit" should {
     "return a BadRequest when receiving an invalid algorithm name" in {
       HttpRequest(HttpMethods.GET, uri = s"/prime/invalidAlgo/30") ~> serviceRoutes.routes ~> check {
         response.status shouldBe StatusCodes.BadRequest
         response.entity.toString() should include("Invalid request - supply a valid algorithm")
+      }
+    }
+  }
+
+  "/healthcheck" should {
+    "return an OK" in {
+      HttpRequest(HttpMethods.GET, uri = s"/healthcheck") ~> serviceRoutes.routes ~> check {
+        response.status shouldBe StatusCodes.OK
       }
     }
   }
